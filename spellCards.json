@@ -1,0 +1,5 @@
+{"spells":[
+    {"name":"Fireball", "attack": 3, "effect":"fire"},
+    {"name":"Ice Ray", "attack": 2, "effect":"freeze"},
+    {"name":"Shield", "attack": 0, "effect":"shield"}
+]}
