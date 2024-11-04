@@ -1,5 +1,11 @@
 import json
 
+with open("troopCards.json", "r") as file:
+    troopCards = json.load(file)
+
+with open("spellCards.json", "r") as file1:
+    spellCards = json.load(file1)
+
 class Card:
     def __init__(self, name, attack, effect):
         self.name = name
@@ -9,7 +15,7 @@ class Card:
     def dealDamage(self):
         pass
 
-class troopCard(Card):
+class TroopCard(Card):
     def __init__(self, name, attack, health, defence, effect):
         super().__init__(self, name, attack, effect)
         self.health = health
@@ -22,6 +28,7 @@ class troopCard(Card):
         else:
             return health - (attack-defence)
 
-class spellCard(Card):
+class SpellCard(Card):
     def __init__(self, name, attack, effect):
         super().__init__(self, name, attack, effect)
+
