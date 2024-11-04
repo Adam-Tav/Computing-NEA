@@ -1,5 +1,8 @@
 {"spells":[
     {"name":"Fireball", "attack": 3, "effect":"fire"},
     {"name":"Ice Ray", "attack": 2, "effect":"freeze"},
-    {"name":"Shield", "attack": 0, "effect":"shield"}
+    {"name":"Shield", "attack": 0, "effect":"shield"},
+    {"name":"Heal", "attack":0, "effect":"heal"},
+    {"name":"Necromancy", "attack":0, "effect":"summonUndead"},
+    {"name":"Summon Wolf", "attack":0, "effect":"summonWolf"}
 ]}

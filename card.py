@@ -1,16 +1,17 @@
 import json
 
 class Card:
-    def __init__(self, name, attack):
+    def __init__(self, name, attack, effect):
         self.name = name
         self.attack = attack
+        self.effect = effect
 
     def dealDamage(self):
         pass
 
 class troopCard(Card):
-    def __init__(self, name, attack, health, defence):
-        super().__init__(self, name, attack)
+    def __init__(self, name, attack, health, defence, effect):
+        super().__init__(self, name, attack, effect)
         self.health = health
         self.defence = defence
     
@@ -22,5 +23,5 @@ class troopCard(Card):
             return health - (attack-defence)
 
 class spellCard(Card):
-    def __init__(self, name, attack):
-        super().__init__(self, name, attack)
+    def __init__(self, name, attack, effect):
+        super().__init__(self, name, attack, effect)
