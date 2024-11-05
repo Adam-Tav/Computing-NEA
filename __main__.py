@@ -1,14 +1,20 @@
-import stack
-import random
-import card
+from programmingTools import *
+from random import *
+from card import *
+import json
+import pygame as py
 
-#cards will be updated to OOP, each index referring to a different card subclass
-#index 0 of each sub-array is the name of the card, index 1 is the health of the card, index 2 is the attack power of each card, index 3 is the defence of each card
 
-shuffle = lambda deck : random.shuffle(deck.contents) #shuffling algorithm to shuffle the player's deck, TODO
+with open("troopCards.json","r") as troopOptions:
+    troopCards = json.load(troopOptions)
+
+with open("spellCards.json","r") as spellOptions:
+    spellCards = json.load(spellOptions)
+
+""" shuffle = lambda playerDeck : random.shuffle(playerDeck.contents) """  #shuffling algorithm to shuffle the player's deck, TODO
 
 def deal_cards(): #deals the player's hand of 10 cards
-   """  for i in range(10): #deals 10 cards into the player's hand
+    """     for i in range(10): #deals 10 cards into the player's hand
         nextCard = playerDeck[len(playerDeck)-1]
         del(playerDeck[len(playerDeck)-1])
         playerHand.append(nextCard)
@@ -18,13 +24,13 @@ def deal_cards(): #deals the player's hand of 10 cards
         nextCard = computerDeck[len(computerDeck)-1]
         del(computerDeck[len(computerDeck)-1])
         computerHand.append(nextCard)
-        print(computerHand) """
-   pass
+        print(computerHand)  """
+    pass
 
 
 
 def combat(): #simple combat algorithm - update when shift over to OOP with more complex combat modules - status effects etc.
-   """  playerCardChoice = int(input("Which card number do you want to choose (1-10): ")) - 1
+    """ playerCardChoice = int(input("Which card number do you want to choose (1-10): ")) - 1
     computerCardChoice = random.randint(1,len(computerHand))
     print(playerCardChoice)
     print(computerCardChoice)
@@ -34,20 +40,36 @@ def combat(): #simple combat algorithm - update when shift over to OOP with more
     elif playerHand[playerCardChoice, 3] == computerHand[computerCardChoice, 3]:
         computerHand[computerCardChoice, 2] -= (playerHand[playerCardChoice, 3] - computerHand[computerCardChoice, 4])
         playerHand[playerCardChoice, 2] -= (computerHand[computerCardChoice, 3] - playerHand[playerCardChoice, 4])
-    else:
-        playerHand[playerCardChoice] """
-   pass
+    else:"""
+    pass
 
 if __name__ == "__main__":
-    playerDeck = stack()
-    computerDeck = stack()
+    playerDeck = Stack()
+    computerDeck = Stack()
 
-    inf = card.TroopCard()
+    inf = TroopCard(**troopCards["sword"])
+    archer = TroopCard(**troopCards["archer"])
+    paladin = TroopCard(**troopCards["paladin"])
+    healer = TroopCard(**troopCards["healer"])
+    wizard = TroopCard(**troopCards["wizard"])
+    rogue = TroopCard(**troopCards["rogue"])
+    necro = TroopCard(**troopCards["necro"])
+    zombie = TroopCard(**troopCards["zombie"])
+    skeleton = TroopCard(**troopCards["skeleton"])
+    wolf = TroopCard(**troopCards["wolf"])
 
-    for i in range(10):
-        playerDeck.addCard()
+
+    for i in range(2):
+        card = input("Enter the name of a card you wish to add to your deck from the following: "+"\n"
+        +inf.name+"\n"
+        +necro.name+"\n")
+        if card == inf.name:
+            playerDeck.push(inf.name)
+        else:
+            playerDeck.push(necro.name)
         print(playerDeck)
 
+    
 
 
 

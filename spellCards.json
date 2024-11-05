@@ -1,8 +1,8 @@
-{"spells":[
-    {"name":"Fireball", "attack": 3, "effect":"fire"},
-    {"name":"Ice Ray", "attack": 2, "effect":"freeze"},
-    {"name":"Shield", "attack": 0, "effect":"shield"},
-    {"name":"Heal", "attack":0, "effect":"heal"},
-    {"name":"Necromancy", "attack":0, "effect":"summonUndead"},
-    {"name":"Summon Wolf", "attack":0, "effect":"summonWolf"}
-]}
+{
+ "fireball":{"name":"Fireball", "attack": 3, "effect":"fire"},
+ "ice":{"name":"Ice Ray", "attack": 2, "effect":"freeze"},
+ "shield":{"name":"Shield", "attack": null, "effect":"shield"},
+ "heal":{"name":"Heal", "attack":null, "effect":"heal"},
+ "necro":{"name":"Necromancy", "attack":null, "effect":"summonUndead"},
+ "wolf":{"name":"Summon Wolf", "attack":null, "effect":"summonWolf"}
+}

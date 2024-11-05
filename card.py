@@ -1,25 +1,17 @@
 import json
+from programmingTools import *
 
-with open("troopCards.json", "r") as file:
-    troopCards = json.load(file)
+with open("troopCards.json","r") as troops:
+    troopCards = json.load(troops)
 
-with open("spellCards.json", "r") as file1:
-    spellCards = json.load(file1)
+with open("spellCards.json","r") as spells:
+    spellCards = json.load(spells)
 
-class Card:
-    def __init__(self, name, attack, effect):
-        self.name = name
-        self.attack = attack
-        self.effect = effect
-
-    def dealDamage(self):
-        pass
-
-class TroopCard(Card):
-    def __init__(self, name, attack, health, defence, effect):
-        super().__init__(self, name, attack, effect)
-        self.health = health
-        self.defence = defence
+#troop card subclass, will pull on troopCards.json to instantiate the different troop cards available
+class TroopCard():
+    def __init__(self, name:str, attack:int, effect:str, health:int, defence:int):
+        self.name, self.attack, self.effect, self.health, self.defence = name, attack, effect, health, defence
+        
     
     def takeDamage(self, health, defence, attack):
         if attack - defence <= 0:
@@ -28,7 +20,7 @@ class TroopCard(Card):
         else:
             return health - (attack-defence)
 
-class SpellCard(Card):
-    def __init__(self, name, attack, effect):
+#spell card subclass, will pull on spellCards.json to instantiate the different spell cards available
+class SpellCard(TroopCard):
+    def __init__(self, name:str, attack:int, effect:str):
         super().__init__(self, name, attack, effect)
-
