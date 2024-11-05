@@ -1,12 +1,88 @@
 {
- "sword":{"name":"Swordsman", "attack":2, "effect":null, "health":5, "defence":2},
- "archer":{"name":"Archer", "attack":3, "effect":null, "health":4, "defence":2},
- "paladin":{"name":"Paladin","attack":1, "effect":"taunt", "health":5, "defence": 3},
- "healer":{"name":"Healer", "attack":0, "effect":"healing", "health":5, "defence":2},
- "wizard":{"name":"Wizard", "attack":4, "effect":null, "health":3, "defence":1},
- "rogue":{"name":"Rogue", "attack":3, "effect":"dodge", "health":3, "defence":2},
- "necro":{"name":"Necromancer", "attack":1, "effect":"summonUndead", "health":3, "defence":2},
- "zombie":{"name":"Zombie", "attack":3, "effect":null, "health":3, "defence":3},
- "skeleton":{"name":"Skeleton", "attack":3, "effect":null, "health":4, "defence":2},
- "wolf":{"name":"Wolf", "attack":3, "effect":null, "health":3, "defence":2}
+    "swordsman": {
+        "name":"Swordsman", 
+        "attack":2, 
+        "effect":null, 
+        "health":5, 
+        "defence":2
+    },
+    
+    "archer": {
+        "name":"Archer", 
+        "attack":3, 
+        "effect":null, 
+        "health":4, 
+        "defence":2
+    },
+    
+    "paladin": {
+        "name":"Paladin",
+        "attack":1, 
+        "effect":"taunt", 
+        "health":5, 
+        "defence": 3
+    },
+    
+    "healer": {
+        "name":"Healer", 
+        "attack":0, 
+        "effect":"healing", 
+        "health":5, 
+        "defence":2
+    },
+    
+    "wizard": {
+        "name":"Wizard", 
+        "attack":4, 
+        "effect":null, 
+        "health":3, 
+        "defence":1
+    },
+    
+    "rogue": {
+        "name":"Rogue", 
+        "attack":3, 
+        "effect":"dodge", 
+        "health":3, 
+        "defence":2
+    },
+    
+    "necromancer": {
+        "name":"Necromancer", 
+        "attack":1, 
+        "effect":"summonUndead", 
+        "health":3, 
+        "defence":2
+    },
+    
+    "zombie": {
+        "name":"Zombie", 
+        "attack":3, 
+        "effect":null, 
+        "health":3, 
+        "defence":3
+    },
+    
+    "skeleton": {
+        "name":"Skeleton", 
+        "attack":3, 
+        "effect":null, 
+        "health":4, 
+        "defence":2
+    },
+    
+    "wolf": {
+        "name":"Wolf", 
+        "attack":3, 
+        "effect":null, 
+        "health":3, 
+        "defence":2
+    },
+    "penguin": {
+        "name":"Penguin",
+        "attack":2,
+        "effect":"freeze",
+        "health":3,
+        "defence":2
+    }
 }

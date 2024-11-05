@@ -8,7 +8,7 @@ with open("spellCards.json","r") as spells:
     spellCards = json.load(spells)
 
 #troop card subclass, will pull on troopCards.json to instantiate the different troop cards available
-class TroopCard():
+class TroopCard:
     def __init__(self, name:str, attack:int, effect:str, health:int, defence:int):
         self.name, self.attack, self.effect, self.health, self.defence = name, attack, effect, health, defence
         
@@ -21,6 +21,6 @@ class TroopCard():
             return health - (attack-defence)
 
 #spell card subclass, will pull on spellCards.json to instantiate the different spell cards available
-class SpellCard(TroopCard):
+class SpellCard:
     def __init__(self, name:str, attack:int, effect:str):
-        super().__init__(self, name, attack, effect)
+        self.name, self.attack, self.effect = name, attack, effect

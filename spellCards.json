@@ -1,8 +1,32 @@
 {
- "fireball":{"name":"Fireball", "attack": 3, "effect":"fire"},
- "ice":{"name":"Ice Ray", "attack": 2, "effect":"freeze"},
- "shield":{"name":"Shield", "attack": null, "effect":"shield"},
- "heal":{"name":"Heal", "attack":null, "effect":"heal"},
- "necro":{"name":"Necromancy", "attack":null, "effect":"summonUndead"},
- "wolf":{"name":"Summon Wolf", "attack":null, "effect":"summonWolf"}
+    "fireball": {
+        "name": "Fireball",
+        "attack": 3,
+        "effect": "fire"
+    },
+    "ice-ray": {
+        "name": "Ice Ray",
+        "attack": 2,
+        "effect": "freeze"
+    },
+    "shield": {
+        "name": "Shield",
+        "attack": null,
+        "effect": "shield"
+    },
+    "heal": {
+        "name": "Heal",
+        "attack": null,
+        "effect": "heal"
+    },
+    "necromancy": {
+        "name": "Necromancy",
+        "attack": null,
+        "effect": "summonUndead"
+    },
+    "summon-wolf": {
+        "name": "Summon Wolf",
+        "attack": null,
+        "effect": "summonWolf"
+    }
 }
