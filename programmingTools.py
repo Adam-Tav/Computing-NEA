@@ -1,8 +1,10 @@
-class Stack:
+import random
 
+class Stack:
+#initialises the stack as a list
     def __init__(self):
         self.items = []
-    
+#    
     def isEmpty(self):
         return len(self.items) == 0
     
@@ -23,7 +25,11 @@ class Stack:
         return len(self.items)
 
     def __str__(self):
-        return f"Deck: {self.items}"
+        return str(self.items)
+    
+    def randomise(self):
+        random.shuffle(self.items)
+        return self.items
 
 
 def getValuesFromDict(dict:dict, *keys:str):

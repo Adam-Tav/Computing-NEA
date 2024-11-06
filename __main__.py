@@ -11,8 +11,6 @@ with open("troopCards.json","r") as troopOptions:
 with open("spellCards.json","r") as spellOptions:
     spellCards = json.load(spellOptions)
 
-""" shuffle = lambda playerDeck : random.shuffle(playerDeck.contents) """  #shuffling algorithm to shuffle the player's deck, TODO
-
 def combat(): #simple combat algorithm - update when shift over to OOP with more complex combat modules - status effects etc.
     """ playerCardChoice = int(input("Which card number do you want to choose (1-10): ")) - 1
     computerCardChoice = random.randint(1,len(computerHand))
@@ -31,7 +29,7 @@ if __name__ == "__main__":
     playerDeck = Stack()
     computerDeck = Stack()
 
-    for i in range(10):
+    for i in range(3):
         print("Enter the name of a card you wish to add to your deck from the following: ")
         for j in troopCards.values():
             print(j["name"])
@@ -46,11 +44,9 @@ if __name__ == "__main__":
         elif card in spellCards.keys():
             playerDeck.push(spellCards[card]["name"])
 
-    print(playerDeck)
-
     allCards = list(troopCards.keys()) + list(spellCards.keys())
 
-    for i in range(10):
+    for i in range(3):
         allCards = list(troopCards.keys()) + list(spellCards.keys())
         card = random.choice(allCards)
 
@@ -60,4 +56,10 @@ if __name__ == "__main__":
             computerDeck.push(spellCards[card]["name"])
         allCards.remove(card)
 
+    print(playerDeck)
     print(computerDeck)
+    
+    shuffled = playerDeck.randomise()
+    computerDeck.randomise()
+
+    print(shuffled)
