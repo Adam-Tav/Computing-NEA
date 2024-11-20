@@ -12,13 +12,15 @@ with open("troopCards.json","r") as troopOptions:
 with open("spellCards.json","r") as spellOptions:
     spellCards = json.load(spellOptions)
 
-def combat(playerHand, computerHand):
+def game(playerHand, computerHand):
     playerPlayedCards = []
     computerPlayedCards = []
     while True:
 #The player's turn to put a card into play or cast a spell
         for i in range(3):
-            playerCardChoice = int(input("Which card number do you want to choose (1-5): ")) - 1
+            print(playerHand)
+            print("Which card number do you want to choose (1 - " , len(playerHand) , "): ")
+            playerCardChoice = int(input("\n > ")) - 1
             
 #Assigns the integer the player chose to the corresponding card in the hand, and 
 # ensures the name of the card is a string so it can replace any spaces with dashes 
@@ -28,48 +30,79 @@ def combat(playerHand, computerHand):
 
 
             if chosenCard in troopCards.keys():
-                troopCardPlayed = troopCards[chosenCard]["name"]
-                print(troopCardPlayed)
+                troopCardPlayed = TroopCard(*getValuesFromDict(troopCards[chosenCard], "name", "attack", "effect", "health", "defence"))
                 playerPlayedCards.append(troopCardPlayed)
             
             elif chosenCard in spellCards.keys():
-                spellCardPlayed = spellCards[chosenCard]["name"]
-                print(spellCardPlayed)
+                spellCardPlayed = SpellCard(*getValuesFromDict(spellCards[chosenCard], "name", "attack", "effect"))
                 playerPlayedCards.append(spellCardPlayed)
+
 #The computer's turn to choose a card
         for i in range(3):
             computerCardChoice = random.randint(0,5)
-            computerChosenCard = str(computerHand[computerCardChoice])
+            computerChosenCard = str(computerHand[computerCardChoice-1])
             computerChosenCard = computerChosenCard.lower().replace(" ", "-")
 
             if computerChosenCard in troopCards.keys():
-                cpuTroopCardPlayed = troopCards[computerChosenCard]["name"]
+
+                cpuTroopCardPlayed = TroopCard(*getValuesFromDict(troopCards[computerChosenCard], "name", "attack", "effect", "health", "defence"))
                 computerPlayedCards.append(cpuTroopCardPlayed)
 
             elif computerChosenCard in spellCards.keys():
-                cpuSpellCardPlayed = spellCards[computerChosenCard]["name"]
+                cpuSpellCardPlayed = SpellCard(*getValuesFromDict(spellCards[computerChosenCard], "name", "attack", "effect"))
                 computerPlayedCards.append(cpuSpellCardPlayed)
+    
 #Combat commences
         i = 0
         while i != 3:
-            if not playerPlayedCards[i] in troopCards:
-                if not computerPlayedCards[i] in troopCards:
+            currentPlayerCard = playerPlayedCards[i]
+            currentComputerCard = computerPlayedCards[i]
+            if isinstance(currentPlayerCard, TroopCard) == True:
+                if isinstance(currentComputerCard, TroopCard) == True:
+                    if currentPlayerCard.attack > currentComputerCard.defence:
+                        print(currentComputerCard.health)
+                        currentComputerCard.health -= round(currentPlayerCard.attack - currentComputerCard.defence/2)
+                        print(currentComputerCard.name, " has taken "+ str(round(currentPlayerCard.attack - currentComputerCard.defence/2)) + " damage!")
+                        print(currentComputerCard.health)
+                        if currentComputerCard.health <= 0:
+                            print(currentComputerCard.name + " has been defeated by " + currentPlayerCard.name)
+                            computerPlayedCards.pop(currentComputerCard)
+                    elif currentComputerCard.attack > currentPlayerCard.defence:
+                        print(currentPlayerCard.health)
+                        currentPlayerCard.health -= (currentComputerCard.attack - currentPlayerCard.defence/2)
+                        print(currentPlayerCard.name, " has taken "+ str(round(currentComputerCard.attack - currentPlayerCard.defence/2)) + " damage!")
+                        print(currentPlayerCard.health)
+                        if currentPlayerCard.health <= 0:
+                            print(currentPlayerCard.name + " has been defeated by " + currentComputerCard.name)
+                            playerPlayedCards.pop(currentPlayerCard)
+                    else:
+                        print("The defences of " + currentComputerCard.name + " were too strong for " + currentPlayerCard.name + " to overcome!")
+                elif isinstance(currentComputerCard, SpellCard) == True:
+                    if currentComputerCard.attack > currentPlayerCard.defence:
+                        print(currentPlayerCard.health)
+                        currentPlayerCard.health -= (currentComputerCard.attack - currentPlayerCard.defence/2)
+                        print(currentPlayerCard.name, " has taken "+ str(round(currentComputerCard.attack - currentPlayerCard.defence/2)) + " damage!")
+                        print(currentPlayerCard.health)
+                        if currentPlayerCard.health <= 0:
+                            print(currentPlayerCard.name + " has been defeated by " + currentComputerCard.name)
+                            playerPlayedCards.pop(currentPlayerCard)
+                    else:
+                        print("The defences of " + currentPlayerCard.name + " were too strong to overcome!")
+            elif isinstance(currentPlayerCard,SpellCard) == True:
+                if isinstance(currentComputerCard, TroopCard) == True:
+                    if currentPlayerCard.attack > currentComputerCard.defence:
+                        print(currentComputerCard.health)
+                        currentComputerCard.health -= (currentPlayerCard.attack - currentComputerCard.defence/2)
+                        print(currentComputerCard.name, " has taken "+ str(round(currentPlayerCard.attack - currentComputerCard.defence/2)) + "damage!")
+                        print(currentComputerCard.health)
+                        if currentComputerCard.health <= 0:
+                            print(currentComputerCard.name + " has been defeated by " + currentPlayerCard.name)
+                            computerPlayedCards.pop(currentComputerCard)
+                    else:
+                        print("The defences of " + currentComputerCard.name + " were too  strong to overcome!")
+                elif isinstance(currentComputerCard, SpellCard):
                     pass
-                elif not computerPlayedCards[i] in spellCards:
-                    pass
-
-            elif not playerPlayedCards[0] in spellCards:
-                if not computerPlayedCards[i] in troopCards:
-                    pass
-                elif not computerPlayedCards[i] in spellCards:
-                    pass
-        
-
-        """ if troopCards[playerHand[playerCardChoice]]["attack"] != troopCards[computerHand[computerCardChoice]]["defence"]:
-            if troopCards[playerHand[playerCardChoice]]["attack"] > troopCards[computerHand[computerCardChoice]]["defence"]:
-                pass
-        else:
-            pass """
+            i += 1
 
 if __name__ == "__main__":
     playerDeck = Stack()
@@ -111,8 +144,7 @@ if __name__ == "__main__":
     for i in range(5):
         playerTopCard = shuffledPlayer.pop()
         playerHand.append(playerTopCard)
-        print(playerHand)
         computerTopCard = shuffledComputer.pop()
         computerHand.append(computerTopCard)
     
-    combat(playerHand, computerHand)
+    game(playerHand, computerHand)

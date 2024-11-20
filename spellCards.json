@@ -11,22 +11,22 @@
     },
     "shield": {
         "name": "Shield",
-        "attack": null,
+        "attack": 0,
         "effect": "shield"
     },
     "heal": {
         "name": "Heal",
-        "attack": null,
+        "attack": 0,
         "effect": "heal"
     },
     "necromancy": {
         "name": "Necromancy",
-        "attack": null,
+        "attack": 0,
         "effect": "summonUndead"
     },
     "summon-wolf": {
         "name": "Summon Wolf",
-        "attack": null,
+        "attack": 0,
         "effect": "summonWolf"
     }
 }
