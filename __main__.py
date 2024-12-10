@@ -7,6 +7,7 @@ from card import *
 import json
 import customtkinter as ctk
 from tkinter import *
+from PIL import Image
 
 #Opens up the .json files that contain the dictionaries with the information about the 
 # troop cards to allow the addition of the card names to the deck and to create the card objects
@@ -15,6 +16,8 @@ with open("troopCards.json","r") as troopOptions:
 
 with open("spellCards.json","r") as spellOptions:
     spellCards = json.load(spellOptions)
+
+img = ctk.CTkImage(dark_image = Image.open("cardBack.png"), size = (120, 180))
 
 class App(ctk.CTk):
     def __init__(self):
@@ -28,20 +31,90 @@ class App(ctk.CTk):
 #Created the frame and displays the buttons that represent the player's draw and discard piles. Buttons used as it provides an 
 # element of interactivity and makes it very easy to execute operations through the use of the "command=" argument
         self.playerPilesFrame = ctk.CTkFrame(self, fg_color = "transparent")
-        self.playerPilesFrame.grid(row = 1, column = 2, sticky = "se", pady = 15)
-        self.drawPile = ctk.CTkButton(self.playerPilesFrame, fg_color="#C8102E", text="Draw Pile", hover_color="#6d0000", height=180, width=120, command=quit)
+        self.playerPilesFrame.grid(row = 2, column = 2, sticky = "se", pady = 15)
+        self.drawPile = ctk.CTkButton(self.playerPilesFrame, fg_color = "transparent", text = "", height = 180, width = 120, command = quit, image = img)
         self.drawPile.pack(side = LEFT)
-        self.discardPile = ctk.CTkButton(self.playerPilesFrame, fg_color="#C8102E", text="Discard Pile", hover_color="#6d0000", height=180, width=120, command=quit)
+        self.discardPile = ctk.CTkButton(self.playerPilesFrame, fg_color = "transparent", text = "", height=180, width=120, command = quit, image = img)
         self.discardPile.pack(side = RIGHT, padx = 20)
 
         self.computerPilesFrame = ctk.CTkFrame(self, fg_color = "transparent")
         self.computerPilesFrame.grid(row = 0, column = 0, sticky = "nw", pady = 15)
-        self.drawPile = ctk.CTkButton(self.computerPilesFrame, fg_color="#C8102E", text="Draw Pile", height=180, width=120, hover = False)
+        self.drawPile = ctk.CTkButton(self.computerPilesFrame, fg_color = "transparent", text = "", height = 180, width = 120, hover = False, image = img)
         self.drawPile.pack(side = RIGHT)
-        self.discardPile = ctk.CTkButton(self.computerPilesFrame, fg_color="#C8102E", text="Discard Pile", height=180, width=120, hover = False)
-        self.discardPile.pack(side = LEFT, padx = 20)
+        self.discardPile = ctk.CTkButton(self.computerPilesFrame, fg_color = "transparent", text="", height = 180, width = 120, hover = False, image = img)
+        self.discardPile.pack(side = LEFT, padx = 10)
 
 
+        self.handFrame = ctk.CTkFrame(self, fg_color = "transparent")
+        self.handFrame.grid(row = 2, column = 1, pady = 15, padx = 60, sticky = "s")
+        
+        self.playerCard1Icon = ctk.CTkButton(self.handFrame, fg_color = "transparent", text = "", height = 180, width = 120, command = self.playCard1, image = img)
+        self.playerCard1Icon.pack(side = LEFT, padx = 10)
+ 
+        self.playerCard2Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard2, image = img)
+        self.playerCard2Icon.pack(side = LEFT, padx = 0)
+
+        self.playerCard3Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard3, image = img)
+        self.playerCard3Icon.pack(side = LEFT, padx = 10)
+
+        self.playerCard4Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard4, image = img)
+        self.playerCard4Icon.pack(side = LEFT, padx = 0)
+
+        self.playerCard5Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard5, image = img)
+        self.playerCard5Icon.pack(side = RIGHT, padx = 10)
+
+
+        self.computerHandFrame = ctk.CTkFrame(self, fg_color = "transparent")
+        self.computerHandFrame.grid(row = 0, column = 1, pady = 15, sticky = "n")
+        
+        self.computerCard1Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 1", hover_color="#6d0000", height=180, width=120, hover = False)
+        self.computerCard1Icon.pack(side = LEFT, padx = 20)
+ 
+        self.computerCard2Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 2", hover_color="#6d0000", height=180, width=120, hover = False)
+        self.computerCard2Icon.pack(side = LEFT, padx = 0)
+
+        self.computerCard3Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 3", hover_color="#6d0000", height=180, width=120, hover = False)
+        self.computerCard3Icon.pack(side = LEFT, padx = 20)
+
+        self.computerCard4Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 4", hover_color="#6d0000", height=180, width=120, hover = False)
+        self.computerCard4Icon.pack(side = LEFT, padx = 0)
+
+        self.computerCard5Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 5", hover_color="#6d0000", height=180, width=120, hover = False)
+        self.computerCard5Icon.pack(side = RIGHT, padx = 20)  
+
+        self.tableFrame = ctk.CTkFrame(self, fg_color = "#704F32")
+        self.tableFrame.grid(row = 1, column = 1)
+
+
+    def playCard1(self):
+        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
+        self.playerCard.pack(padx = 10, side = LEFT)
+
+        self.playerCard1Icon.destroy()
+
+    def playCard2(self):
+        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
+        self.playerCard.pack(padx = 10, side = LEFT)
+
+        self.playerCard2Icon.destroy()
+
+    def playCard3(self):
+        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
+        self.playerCard.pack(padx = 10, side = LEFT)
+
+        self.playerCard3Icon.destroy()
+
+    def playCard4(self):
+        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
+        self.playerCard.pack(padx = 10, side = LEFT)
+
+        self.playerCard4Icon.destroy()
+    
+    def playCard5(self):
+        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
+        self.playerCard.pack(padx = 10, side = LEFT)
+
+        self.playerCard5Icon.destroy()
 
 
 
@@ -203,4 +276,3 @@ if __name__ == "__main__":
 
     app = App()
     app.mainloop()
-    
