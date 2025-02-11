@@ -1,10 +1,9 @@
 import random
 
 class Stack:
-#initialises the stack as a list
     def __init__(self):
         self.items = []
-#    
+    
     def isEmpty(self):
         return len(self.items) == 0
     

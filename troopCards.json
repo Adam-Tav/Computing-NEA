@@ -4,7 +4,8 @@
         "attack":2, 
         "effect":null, 
         "health":5, 
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\swordsmanCard.webp"
     },
     
     "archer": {
@@ -12,7 +13,8 @@
         "attack":3, 
         "effect":null, 
         "health":4, 
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\archerCard.webp"
     },
     
     "paladin": {
@@ -20,7 +22,8 @@
         "attack":1, 
         "effect":"taunt", 
         "health":5, 
-        "defence": 3
+        "defence": 3,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\paladinCard.webp"
     },
     
     "healer": {
@@ -28,7 +31,8 @@
         "attack":0, 
         "effect":"healing", 
         "health":5, 
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\healerCard.webp"
     },
     
     "wizard": {
@@ -36,7 +40,8 @@
         "attack":4, 
         "effect":null, 
         "health":3, 
-        "defence":1
+        "defence":1,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\wizardCard.webp"
     },
     
     "rogue": {
@@ -44,7 +49,8 @@
         "attack":3, 
         "effect":"dodge", 
         "health":3, 
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\rogueCard.webp"
     },
     
     "necromancer": {
@@ -52,7 +58,8 @@
         "attack":1, 
         "effect":"summonUndead", 
         "health":3, 
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\necromancerCard.webp"
     },
     
     "zombie": {
@@ -60,7 +67,8 @@
         "attack":3, 
         "effect":null, 
         "health":3, 
-        "defence":3
+        "defence":3,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\zombieCard.webp"
     },
     
     "skeleton": {
@@ -68,7 +76,8 @@
         "attack":3, 
         "effect":null, 
         "health":4, 
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"
     },
     
     "wolf": {
@@ -76,13 +85,15 @@
         "attack":3, 
         "effect":null, 
         "health":3, 
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\wolfCard.webp"
     },
     "penguin": {
         "name":"Penguin",
         "attack":2,
         "effect":"freeze",
         "health":3,
-        "defence":2
+        "defence":2,
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\card art\\penguinCard.webp"
     }
 }

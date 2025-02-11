@@ -1,8 +1,5 @@
 #Imports programmingTools. It contains my Stack class, which is needed for the decks and discard piles
 from programmingTools import *
-#Imports random, which is needed for shuffling
-import random
-#Imports the 
 from card import *
 import json
 import customtkinter as ctk
@@ -17,7 +14,7 @@ with open("troopCards.json","r") as troopOptions:
 with open("spellCards.json","r") as spellOptions:
     spellCards = json.load(spellOptions)
 
-img = ctk.CTkImage(dark_image = Image.open("cardBack.png"), size = (120, 180))
+cardBack = ctk.CTkImage(dark_image = Image.open("C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"), size = (120, 180))
 
 class App(ctk.CTk):
     def __init__(self):
@@ -28,241 +25,162 @@ class App(ctk.CTk):
         self.grid_columnconfigure(0, weight = 1)
         self.grid_rowconfigure(0, weight = 1)
 
-#Created the frame and displays the buttons that represent the player's draw and discard piles. Buttons used as it provides an 
+        self.playerHand = [] #stores the card objects
+        self.cardHolder = [] #stores the card buttons
+        self.computerHand = []
+
+#Created a frame to represent the game screen, allowing for the "switching" between several screens such as the deckbuilding 
+# screen, game screen and title screen
+        self.gameScreen = ctk.CTkFrame(self, fg_color = "transparent")
+        self.gameScreen.grid(row = 0, column = 0)
+
+#Creates the frame and displays the buttons that represent the player's draw and discard piles. Buttons used as it provides an 
 # element of interactivity and makes it very easy to execute operations through the use of the "command=" argument
-        self.playerPilesFrame = ctk.CTkFrame(self, fg_color = "transparent")
-        self.playerPilesFrame.grid(row = 2, column = 2, sticky = "se", pady = 15)
-        self.drawPile = ctk.CTkButton(self.playerPilesFrame, fg_color = "transparent", text = "", height = 180, width = 120, command = quit, image = img)
-        self.drawPile.pack(side = LEFT)
-        self.discardPile = ctk.CTkButton(self.playerPilesFrame, fg_color = "transparent", text = "", height=180, width=120, command = quit, image = img)
+        self.playerPilesFrame = ctk.CTkFrame(self.gameScreen, fg_color = "transparent")
+        self.playerPilesFrame.grid(row = 3, column = 2, sticky = "se", pady = 15)
+
+        self.playerDrawPile = ctk.CTkButton(self.playerPilesFrame, fg_color = "transparent", text = "", height = 180, width = 120, command = self.drawCard, image = cardBack)
+        self.playerDrawPile.pack(side = LEFT)
+
+        self.discardPile = ctk.CTkButton(self.playerPilesFrame, fg_color = "transparent", text = "", height=180, width=120, command = quit, image = cardBack)
         self.discardPile.pack(side = RIGHT, padx = 20)
 
-        self.computerPilesFrame = ctk.CTkFrame(self, fg_color = "transparent")
+#creates the frame and displays the buttons that represent the computer's draw and discard piles. Buttons used here because it is 
+# an easy way to get the scale correct, and can be programmed to play a card in response to the player playing a card    
+        self.computerPilesFrame = ctk.CTkFrame(self.gameScreen, fg_color = "transparent")
         self.computerPilesFrame.grid(row = 0, column = 0, sticky = "nw", pady = 15)
-        self.drawPile = ctk.CTkButton(self.computerPilesFrame, fg_color = "transparent", text = "", height = 180, width = 120, hover = False, image = img)
-        self.drawPile.pack(side = RIGHT)
-        self.discardPile = ctk.CTkButton(self.computerPilesFrame, fg_color = "transparent", text="", height = 180, width = 120, hover = False, image = img)
-        self.discardPile.pack(side = LEFT, padx = 10)
 
+        self.computerDrawPile = ctk.CTkButton(self.computerPilesFrame, fg_color = "transparent", text = "", height = 180, width = 120, hover = False, image = cardBack)
+        self.computerDrawPile.pack(side = RIGHT)
 
-        self.handFrame = ctk.CTkFrame(self, fg_color = "transparent")
-        self.handFrame.grid(row = 2, column = 1, pady = 15, padx = 60, sticky = "s")
+        self.computerDiscardPile = ctk.CTkButton(self.computerPilesFrame, fg_color = "transparent", text="", height = 180, width = 120, hover = False, image = cardBack)
+        self.computerDiscardPile.pack(side = LEFT, padx = 10)
+
+#creates the frame and displays the buttons for the player's hand. Again, buttons used for the interactivity for the player and the 
+# ease of executing commands by button presses
+        self.handFrame = ctk.CTkFrame(self.gameScreen, fg_color = "transparent")
+        self.handFrame.grid(row = 3, column = 1, pady = 15, padx = 60, sticky = "s")
         
-        self.playerCard1Icon = ctk.CTkButton(self.handFrame, fg_color = "transparent", text = "", height = 180, width = 120, command = self.playCard1, image = img)
-        self.playerCard1Icon.pack(side = LEFT, padx = 10)
- 
-        self.playerCard2Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard2, image = img)
-        self.playerCard2Icon.pack(side = LEFT, padx = 0)
-
-        self.playerCard3Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard3, image = img)
-        self.playerCard3Icon.pack(side = LEFT, padx = 10)
-
-        self.playerCard4Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard4, image = img)
-        self.playerCard4Icon.pack(side = LEFT, padx = 0)
-
-        self.playerCard5Icon = ctk.CTkButton(self.handFrame, fg_color="transparent", text="", height=180, width=120, command=self.playCard5, image = img)
-        self.playerCard5Icon.pack(side = RIGHT, padx = 10)
+        for i in range(5):
+            currentPlayerCard = playerDeck.items[-1]
+            self.playerCardIcon = ctk.CTkButton(self.handFrame, fg_color = "transparent", text = "", height = 180, width = 120, command = lambda i=i: self.playCard(i), image = ctk.CTkImage(Image.open(currentPlayerCard.image), size = (120, 180)))
+            self.playerCardIcon.pack(side = LEFT, padx = 5)
+            self.playerHand.append(currentPlayerCard)
+            self.cardHolder.append(self.playerCardIcon)
+            playerDeck.pop()
 
 
-        self.computerHandFrame = ctk.CTkFrame(self, fg_color = "transparent")
-        self.computerHandFrame.grid(row = 0, column = 1, pady = 15, sticky = "n")
-        
-        self.computerCard1Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 1", hover_color="#6d0000", height=180, width=120, hover = False)
-        self.computerCard1Icon.pack(side = LEFT, padx = 20)
- 
-        self.computerCard2Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 2", hover_color="#6d0000", height=180, width=120, hover = False)
-        self.computerCard2Icon.pack(side = LEFT, padx = 0)
-
-        self.computerCard3Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 3", hover_color="#6d0000", height=180, width=120, hover = False)
-        self.computerCard3Icon.pack(side = LEFT, padx = 20)
-
-        self.computerCard4Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 4", hover_color="#6d0000", height=180, width=120, hover = False)
-        self.computerCard4Icon.pack(side = LEFT, padx = 0)
-
-        self.computerCard5Icon = ctk.CTkButton(self.computerHandFrame, fg_color="#C8102E", text="Computer 5", hover_color="#6d0000", height=180, width=120, hover = False)
-        self.computerCard5Icon.pack(side = RIGHT, padx = 20)  
-
-        self.tableFrame = ctk.CTkFrame(self, fg_color = "#704F32")
-        self.tableFrame.grid(row = 1, column = 1)
-
-
-    def playCard1(self):
-        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
-        self.playerCard.pack(padx = 10, side = LEFT)
-
-        self.playerCard1Icon.destroy()
-
-    def playCard2(self):
-        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
-        self.playerCard.pack(padx = 10, side = LEFT)
-
-        self.playerCard2Icon.destroy()
-
-    def playCard3(self):
-        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
-        self.playerCard.pack(padx = 10, side = LEFT)
-
-        self.playerCard3Icon.destroy()
-
-    def playCard4(self):
-        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
-        self.playerCard.pack(padx = 10, side = LEFT)
-
-        self.playerCard4Icon.destroy()
-    
-    def playCard5(self):
-        self.playerCard = ctk.CTkButton(self.tableFrame, fg_color = "transparent", text = "", height = 180, width = 120, image = img)
-        self.playerCard.pack(padx = 10, side = LEFT)
-
-        self.playerCard5Icon.destroy()
-
-
-
-def deckBuilding():
-    for i in range(10):
-        print("Enter the name of a card you wish to add to your deck from the following: ")
-        for j in troopCards.values():
-                print(j["name"])
-        for j in spellCards.values():
-                print(j["name"])
-        card = input("\n > ")
-
-        card = card.lower().replace(" ", "-")
-
-        if card in troopCards.keys():
-            playerDeck.push(troopCards[card]["name"])
-        elif card in spellCards.keys():
-            playerDeck.push(spellCards[card]["name"])
-
-        allCards = list(troopCards.keys()) + list(spellCards.keys())
-
-        for i in range(10):
-            computerCard = random.choice(allCards)
-
-            if computerCard in troopCards.keys():
-                computerDeck.push(troopCards[computerCard]["name"])
-            elif computerCard in spellCards.keys():
-                computerDeck.push(spellCards[computerCard]["name"])
-            allCards.remove(card)
-    
-        shuffledPlayer = playerDeck.randomise()
-        shuffledComputer = computerDeck.randomise()
-
-        playerHand = []
-        computerHand = []
+#creates the frame and displays the buttons for the computer's hand. Again, buttons used for uniformity with the player's cards and
+# the computer's cards
+        self.computerHandFrame = ctk.CTkFrame(self.gameScreen, fg_color = "transparent")
+        self.computerHandFrame.grid(row = 0, column = 1, padx = 30, pady = 15, sticky = "n")
 
         for i in range(5):
-            playerTopCard = shuffledPlayer.pop()
-            playerHand.append(playerTopCard)
-            computerTopCard = shuffledComputer.pop()
-            computerHand.append(computerTopCard)
+            currentComputerCard = computerDeck.items[-1]
+            self.computerCardIcon = ctk.CTkButton(self.computerHandFrame, fg_color = "transparent", text = "", height = 180, width = 120, hover = False, image = cardBack)
+            self.computerCardIcon.pack(side = LEFT, padx = 5)
+            self.computerHand.append(currentComputerCard)
+            computerDeck.pop()
+        
+        self.deckSizeCounter = ctk.CTkLabel(
+            self.gameScreen, 
+            fg_color = "transparent", 
+            text = f"Cards Remaining: {len(playerDeck.items)}"
+            )
+        self.deckSizeCounter.grid(
+            row = 2, 
+            column = 2, 
+            padx = 10, 
+            sticky = "sw"
+            )
 
-#the combat element of the game (the main element)
-def game(playerHand, computerHand):
-    deckBuilding()
-    #Creates an array to store the cards the player and computer have played to represent the table
-    playerPlayedCards = []
-    computerPlayedCards = []
-    while True:
-#The player's turn to put a card into play or cast a spell
-        for i in range(3):
-            print(playerHand)
-            print("Which card number do you want to choose (1 - " , len(playerHand) , "): ")
-            playerCardChoice = int(input("\n > ")) - 1
-            
-#Assigns the integer the player chose to the corresponding card in the hand, and 
-# ensures the name of the card is a string so it can replace any spaces with dashes 
-# for confirmation within the json files            
-            chosenCard = str(playerHand[playerCardChoice])
-            chosenCard = chosenCard.lower().replace(" ", "-")
+#creates the frame for the table
+        self.tableFrame1 = ctk.CTkFrame(
+            self.gameScreen, 
+            fg_color = "#704F32"
+            )
+        self.tableFrame1.grid(
+            row = 1, 
+            column = 1
+            )
 
-#checks if the string stored in chosenCard is a key in the troopCards or spellCards .json files
-# and if it is there an object is created to store the card as an object in the "table", represented
-# by the array playerPlayedCards
-            if chosenCard in troopCards.keys():
-                troopCardPlayed = TroopCard(*getValuesFromDict(troopCards[chosenCard], "name", "attack", "effect", "health", "defence"))
-                playerPlayedCards.append(troopCardPlayed)
-            
-            elif chosenCard in spellCards.keys():
-                spellCardPlayed = SpellCard(*getValuesFromDict(spellCards[chosenCard], "name", "attack", "effect"))
-                playerPlayedCards.append(spellCardPlayed)
+        self.tableFrame2 = ctk.CTkFrame(self.gameScreen, fg_color = "#704F32")
+        self.tableFrame2.grid(row = 2, column = 1)
 
-#The computer's turn to choose a card
-        for i in range(3):
-            #generates a random number between 0 and 5 (the current size of the hand), then converts the
-            #card name stored in that index to a string and converts it to the format of the keys in the
-            #two JSON files
-            computerCardChoice = random.randint(0,5)
-            computerChosenCard = str(computerHand[computerCardChoice-1])
-            computerChosenCard = computerChosenCard.lower().replace(" ", "-")
+#sets the maximum hand size to 5 as per the rules, and sets the maximum number of cards the player or computer can play to 3 as per 
+# the rules
+        self.maxHandSize = 5
+        self.maxPlayedCards = 14
 
-            #Checks whether the key is in troopCards, creates a TroopCard object with the data that key
-            #links to and appends that object to the array that represents the computer's side of the
-            #playing table
-            if computerChosenCard in troopCards.keys():
+#creates the array that will be used to store the card objects that are stored on the play table
+        self.playerPlayTable = []
 
-                cpuTroopCardPlayed = TroopCard(*getValuesFromDict(troopCards[computerChosenCard], "name", "attack", "effect", "health", "defence"))
-                computerPlayedCards.append(cpuTroopCardPlayed)
-            #Checks whether the key is in spellCards, creates a SpellCard object with the data that key
-            #links to and appends that object to the array that represents the computer's side of the
-            #playing table
-            elif computerChosenCard in spellCards.keys():
-                cpuSpellCardPlayed = SpellCard(*getValuesFromDict(spellCards[computerChosenCard], "name", "attack", "effect"))
-                computerPlayedCards.append(cpuSpellCardPlayed)
-    
-#Combat commences
-        i = 0
-        while i != 3:
-            currentPlayerCard = playerPlayedCards[i]
-            currentComputerCard = computerPlayedCards[i]
-            #Checking whether the player card is a troop card or a spell card to determine whether it can take and deal damage or only deal damage
-            if isinstance(currentPlayerCard, TroopCard) == True:
-                #Checking whether the computer card is 
-                if isinstance(currentComputerCard, TroopCard) == True:
-                    if currentPlayerCard.attack > currentComputerCard.defence:
-                        print(currentComputerCard.health)
-                        currentComputerCard.health -= round(currentPlayerCard.attack - currentComputerCard.defence/2)
-                        print(currentComputerCard.name, " has taken "+ str(round(currentPlayerCard.attack - currentComputerCard.defence/2)) + " damage!")
-                        print(currentComputerCard.health)
-                        if currentComputerCard.health <= 0:
-                            print(currentComputerCard.name + " has been defeated by " + currentPlayerCard.name)
-                            computerPlayedCards.pop(currentComputerCard)
-                    elif currentComputerCard.attack > currentPlayerCard.defence:
-                        print(currentPlayerCard.health)
-                        currentPlayerCard.health -= (currentComputerCard.attack - currentPlayerCard.defence/2)
-                        print(currentPlayerCard.name, " has taken "+ str(round(currentComputerCard.attack - currentPlayerCard.defence/2)) + " damage!")
-                        print(currentPlayerCard.health)
-                        if currentPlayerCard.health <= 0:
-                            print(currentPlayerCard.name + " has been defeated by " + currentComputerCard.name)
-                            playerPlayedCards.pop(currentPlayerCard)
-                    else:
-                        print("The defences of " + currentComputerCard.name + " were too strong for " + currentPlayerCard.name + " to overcome!")
-                elif isinstance(currentComputerCard, SpellCard) == True:
-                    if currentComputerCard.attack > currentPlayerCard.defence:
-                        print(currentPlayerCard.health)
-                        currentPlayerCard.health -= (currentComputerCard.attack - currentPlayerCard.defence/2)
-                        print(currentPlayerCard.name, " has taken "+ str(round(currentComputerCard.attack - currentPlayerCard.defence/2)) + " damage!")
-                        print(currentPlayerCard.health)
-                        if currentPlayerCard.health <= 0:
-                            print(currentPlayerCard.name + " has been defeated by " + currentComputerCard.name)
-                            playerPlayedCards.pop(currentPlayerCard)
-                    else:
-                        print("The defences of " + currentPlayerCard.name + " were too strong to overcome!")
-            elif isinstance(currentPlayerCard,SpellCard) == True:
-                if isinstance(currentComputerCard, TroopCard) == True:
-                    if currentPlayerCard.attack > currentComputerCard.defence:
-                        print(currentComputerCard.health)
-                        currentComputerCard.health -= (currentPlayerCard.attack - currentComputerCard.defence/2)
-                        print(currentComputerCard.name, " has taken "+ str(round(currentPlayerCard.attack - currentComputerCard.defence/2)) + "damage!")
-                        print(currentComputerCard.health)
-                        if currentComputerCard.health <= 0:
-                            print(currentComputerCard.name + " has been defeated by " + currentPlayerCard.name)
-                            computerPlayedCards.pop(currentComputerCard)
-                    else:
-                        print("The defences of " + currentComputerCard.name + " were too  strong to overcome!")
-                elif isinstance(currentComputerCard, SpellCard):
-                    pass
-            i += 1
+#assigned to the draw pile, enables the drawing of cards from the draw pile. cards are drawn and given the playCard method to allow
+#  them to be played
+    def drawCard(self): 
+        if len(self.playerHand) < self.maxHandSize:
+            #stores the deck size as a variable for simpler calling withing the method
+            deckSize = playerDeck.size() 
+            #ensures the deck has cards in it before removing the top card, adding it to the player's hand and creating the button 
+            # to show the card
+            if deckSize > 0: 
+                card = playerDeck.pop()
+                self.playerHand.append(card)
+                self.playerCardIcon = ctk.CTkButton(
+                    self.handFrame, 
+                    fg_color = "transparent", 
+                    text="",
+                    height=180, 
+                    width=120, 
+                    command = lambda:  self.playCard(self.playerHand.index(card)), 
+                    image = ctk.CTkImage(Image.open(self.playerHand[self.playerHand.index(card)].image), 
+                                         size = (120, 180)
+                                         )
+                    )
+
+                self.playerCardIcon.pack(side = LEFT, padx = 5)
+                self.cardHolder.append(self.playerCardIcon)
+                
+                #updates the counter to reflect the removal of a card from the deck
+                self.deckSizeCounter.destroy() 
+                self.deckSizeCounter = ctk.CTkLabel(
+                    self.gameScreen, 
+                    fg_color = "transparent", 
+                    text = f"Cards Remaining: {len(playerDeck.items)}"
+                    )
+                self.deckSizeCounter.grid(row = 2, column = 2, pady = 5)
+
+                #after a card has been played, checks if there are any cards remaining in the deck. if there aren't, the button 
+                # representing the draw pile gets destroyed
+                if deckSize == 0:
+                    self.playerDrawPile.destroy()
+
+    #given to all drawn cards, this checks to make sure the player hasn't already played the maximum number of cards, before
+    # destroying the button stored in the index (i) assigned to the button when it's created, and creating a new button with the
+    # stats and card art of the played card
+    def playCard(self, cardIndex):
+        self.cardHolder[cardIndex].destroy()
+        if len(self.playerPlayTable) < self.maxPlayedCards:
+            self.playerCard = ctk.CTkButton(
+                self.tableFrame2, 
+                fg_color = "transparent", 
+                text = "", 
+                height = 180, 
+                width = 120, 
+                hover = False, 
+                image = ctk.CTkImage(
+                    Image.open(
+                        self.playerHand[cardIndex].image
+                    ), 
+                    size = (120, 180)
+                )
+            )
+            self.playerCard.pack(padx = 5, side = LEFT)
+            self.playerPlayTable.append(self.playerHand[cardIndex])
+
+            self.playerHand.pop(cardIndex)
+
+
 
 #The main part of the program - initialises the decks, discard piles, hands, main element of the game
 #and facilitates the deckbuilding element of the game
@@ -273,6 +191,49 @@ if __name__ == "__main__":
     computerDeck = Stack()
     playerDiscardPile = Stack()
     computerDiscardPile = Stack()
+
+    #creates a list of the keys for the 
+    troopCardKeys = list(
+        troopCards.keys()
+        )
+    spellcardKeys = list(
+        spellCards.keys()
+    )
+
+    for i in range(1, len(troopCardKeys)-1):
+        playerDeck.items.append(
+            TroopCard(
+                *getValuesFromDict(
+                    troopCards[troopCardKeys[i]], 
+                    "name", 
+                    "attack", 
+                    "effect", 
+                    "health", 
+                    "defence", 
+                    "image"
+                    )
+                )
+            )
+        computerDeck.items.append(
+            TroopCard(
+                *getValuesFromDict(
+                    troopCards[troopCardKeys[i]], 
+                    "name", 
+                    "attack", 
+                    "effect", 
+                    "health", 
+                    "defence", 
+                    "image"
+                    )
+                )
+            )
+
+    for j in range(0, len(spellcardKeys)-1):
+        playerDeck.items.append(SpellCard(*getValuesFromDict(spellCards[spellcardKeys[j]], "name", "attack", "effect", "image")))
+        computerDeck.items.append(SpellCard(*getValuesFromDict(spellCards[spellcardKeys[j]], "name", "attack", "effect", "image")))
+
+    playerDeck.randomise()
+    computerDeck.randomise()
 
     app = App()
     app.mainloop()

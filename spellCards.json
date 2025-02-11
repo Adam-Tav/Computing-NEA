@@ -2,31 +2,37 @@
     "fireball": {
         "name": "Fireball",
         "attack": 3,
-        "effect": "fire"
+        "effect": "fire",
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"
     },
     "ice-ray": {
         "name": "Ice Ray",
         "attack": 2,
-        "effect": "freeze"
+        "effect": "freeze",
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"
     },
     "shield": {
         "name": "Shield",
-        "attack": 0,
-        "effect": "shield"
+        "attack": null,
+        "effect": "shield",
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"
     },
     "heal": {
         "name": "Heal",
         "attack": 0,
-        "effect": "heal"
+        "effect": "heal",
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"
     },
     "necromancy": {
         "name": "Necromancy",
-        "attack": 0,
-        "effect": "summonUndead"
+        "attack": null,
+        "effect": "summonUndead",
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"
     },
     "summon-wolf": {
         "name": "Summon Wolf",
-        "attack": 0,
-        "effect": "summonWolf"
+        "attack": null,
+        "effect": "summonWolf",
+        "image":"C:\\Users\\adamt\\OneDrive\\School\\Computing\\Computing NEA\\cardBack.webp"
     }
 }
